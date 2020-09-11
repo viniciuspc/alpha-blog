@@ -19,6 +19,12 @@ class ArticlesController < ApplicationController
     @article = Article.new
   end
 
+  # Displays and form to update an article
+  def edit
+    #Find the article with the id caming from the params
+    @article = Article.find(params[:id])
+  end
+
   # Save the new article in the databbase
   def create
     # Require the top level atribute article and permit only the title and Description
@@ -54,5 +60,18 @@ class ArticlesController < ApplicationController
   #     render 'new'
   #   end
   # end
+
+  # Save the edited article to the database
+  def update
+    # Find the article to update
+    @article = Article.find(params[:id])
+    # Update the article
+    if @article.update(params.require(:article).permit(:title, :description))
+      flash[:notice] ="Article was updated successfully"
+      redirect_to @article
+    else
+      render "edit"
+    end
+  end
 
 end
