@@ -1,10 +1,10 @@
 class ArticlesController < ApplicationController
+  # Perform the action set_article before the execution of each method in
+  # in the only array
+  before_action :set_article, only: [:show,:edit, :update, :destroy]
+
   # Displays a specific article
   def show
-    # Query paramenters from the page request
-    # Are avaible at the params hash
-    # @ will convert the variable to be an instance variable
-    @article = Article.find(params[:id])
   end
 
   # List all articles
@@ -21,8 +21,6 @@ class ArticlesController < ApplicationController
 
   # Displays and form to update an article
   def edit
-    #Find the article with the id caming from the params
-    @article = Article.find(params[:id])
   end
 
   # Save the new article in the databbase
@@ -63,8 +61,6 @@ class ArticlesController < ApplicationController
 
   # Save the edited article to the database
   def update
-    # Find the article to update
-    @article = Article.find(params[:id])
     # Update the article
     if @article.update(params.require(:article).permit(:title, :description))
       flash[:notice] ="Article was updated successfully"
@@ -75,9 +71,18 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    @article = Article.find(params[:id])
     @article.destroy
     redirect_to articles_path
+  end
+
+  # All methods bellow it are private methods
+  private
+
+  def set_article
+    # Query paramenters from the page request
+    # Are avaible at the params hash
+    # @ will convert the variable to be an instance variable
+    @article = Article.find(params[:id])
   end
 
 end
