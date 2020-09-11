@@ -5,7 +5,7 @@
     <tr>
       <th>Title</th>
       <th>Description</th>
-      <th>Actions</th>
+      <th colspan="3">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -19,9 +19,13 @@
           link_to "what to show",
           article_path(article.id) or just article_path(article)
           method: the method as a symbol
+          data: show a confirmation message before delete the article
         -->
-        <td><%= link_to "Delete", article_path(article), method: :delete%></td>
+        <td><%= link_to "Delete", article_path(article), method: :delete, data: {confirm: "Are you sure?"}%></td>
       </tr>
     <%end%>
   </tbody>
 </table>
+<p>
+  <%= link_to "Create new article", new_article_path %>
+</p>
