@@ -27,7 +27,9 @@ class ArticlesController < ApplicationController
     @article = Article.new(params.require(:article).permit(:title, :description))
     # if to validate if the save was sucessful
     if @article.save
-
+      # used to display a success mesage in the show page
+      # :notice to be success full
+      flash[:notice] = "Article was created successfully"
       # Specify where the browser should go after the article is saved
       # Rails will extract the id from @article and redirect to the show path.
       # Since the show path is /articles/:id
