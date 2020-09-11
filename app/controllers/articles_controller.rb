@@ -25,10 +25,8 @@ class ArticlesController < ApplicationController
 
   # Save the new article in the databbase
   def create
-    # Require the top level atribute article and permit only the title and Description
-    # from it.
-    # It is a security feature included at rails 4
-    @article = Article.new(params.require(:article).permit(:title, :description))
+
+    @article = Article.new(article_params)
     # if to validate if the save was sucessful
     if @article.save
       # used to display a success mesage in the show page
@@ -51,8 +49,9 @@ class ArticlesController < ApplicationController
 
   # How create looks like without the comments
   # def create
-  #   @article = Article.new(params.require(:article).permit(:title, :description))
+  #   @article = Article.new(article_params)
   #   if @article.save
+  #     flash[:notice] = "Article was created successfully"
   #     redirect_to @article
   #   else
   #     render 'new'
@@ -62,7 +61,7 @@ class ArticlesController < ApplicationController
   # Save the edited article to the database
   def update
     # Update the article
-    if @article.update(params.require(:article).permit(:title, :description))
+    if @article.update(article_params)
       flash[:notice] ="Article was updated successfully"
       redirect_to @article
     else
@@ -83,6 +82,13 @@ class ArticlesController < ApplicationController
     # Are avaible at the params hash
     # @ will convert the variable to be an instance variable
     @article = Article.find(params[:id])
+  end
+
+  def article_params
+    # Require the top level atribute article and permit only the title and Description
+    # from it.
+    # It is a security feature included at rails 4
+    params.require(:article).permit(:title, :description)
   end
 
 end
