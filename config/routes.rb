@@ -7,5 +7,12 @@ Rails.application.routes.draw do
   # :create POST /articles Save the article caming from the form in the database
   # :edit GET /articles/:id/edit Displays the form to edit a specific article
   # :update PATCH /articles/:id Update the article caming from the form in the database
-  resources :articles, only: [:show, :index, :new, :create, :edit, :update]
+  # :destroy DELETE /articles/:id Delete and specific article from the database
+  # resources :articles, only: [:show, :index, :new, :create, :edit, :update, :destroy]
+
+  # Expose all the routes for articles
+  # resources provides all REST-ful routes to Rails resources. (In this case article is the resource)
+  # REST - Representational state transfer - mapping HTTP verbs (get, post,
+  # put/patch, delete) to CRUD actions
+  resources :articles
 end
