@@ -14,6 +14,9 @@ class ArticlesController < ApplicationController
 
   # Displays the form to create a new article
   def new
+    # Used on the first time the form is displayd to avoid sending nill
+    # To the validadion check so @article.errors.any? is return false.
+    @article = Article.new
   end
 
   # Save the new article in the databbase
@@ -22,15 +25,21 @@ class ArticlesController < ApplicationController
     # from it.
     # It is a security feature included at rails 4
     @article = Article.new(params.require(:article).permit(:title, :description))
-    @article.save
+    # if to validate if the save was sucessful
+    if @article.save
 
-    # Specify where the browser should go after the article is saved
-    # Rails will extract the id from @article and redirect to the show path.
-    # Since the show path is /articles/:id
+      # Specify where the browser should go after the article is saved
+      # Rails will extract the id from @article and redirect to the show path.
+      # Since the show path is /articles/:id
 
-    # redirect_to article_path(@article)
+      # redirect_to article_path(@article)
 
-    # Shortened the previous redirect_to
-    redirect_to @article
+      # Shortened the previous redirect_to
+      redirect_to @article
+    else
+      # render the new form again
+      render "new"
+    end
+
   end
 end
