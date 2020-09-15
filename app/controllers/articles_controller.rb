@@ -27,6 +27,8 @@ class ArticlesController < ApplicationController
   def create
 
     @article = Article.new(article_params)
+    # While there is no authentication
+    @article.user = User.first
     # if to validate if the save was sucessful
     if @article.save
       # used to display a success mesage in the show page
