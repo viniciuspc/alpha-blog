@@ -9,7 +9,7 @@ class ArticlesController < ApplicationController
 
   # List all articles
   def index
-    @articles = Article.all
+    @articles = Article.paginate(page: params[:page], per_page: 5)
   end
 
   # Displays the form to create a new article
