@@ -15,4 +15,7 @@ Rails.application.routes.draw do
   # REST - Representational state transfer - mapping HTTP verbs (get, post,
   # put/patch, delete) to CRUD actions
   resources :articles
+
+  get "signup", to: "users#new"
+  resources :users, except: [:new]
 end
