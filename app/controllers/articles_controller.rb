@@ -28,7 +28,7 @@ class ArticlesController < ApplicationController
 
     @article = Article.new(article_params)
     # While there is no authentication
-    @article.user = User.first
+    @article.user = current_user
     # if to validate if the save was sucessful
     if @article.save
       # used to display a success mesage in the show page
