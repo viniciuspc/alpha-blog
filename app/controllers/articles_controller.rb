@@ -1,7 +1,11 @@
 class ArticlesController < ApplicationController
   # Perform the action set_article before the execution of each method in
   # in the only array
+  # Various before_action will execute in order, because of this,
+  # it is important to have require_user before require_same_user
   before_action :set_article, only: [:show,:edit, :update, :destroy]
+  before_action :require_user, except: [:show, :index]
+  before_action :require_same_user, only: [:edit, :update, :destroy]
 
   # Displays a specific article
   def show
@@ -91,6 +95,13 @@ class ArticlesController < ApplicationController
     # from it.
     # It is a security feature included at rails 4
     params.require(:article).permit(:title, :description)
+  end
+
+  def require_same_user
+    if current_user != @article.user
+      flash[:alert] = "You can only edit or delete your own article"
+      redirect_to @article
+    end
   end
 
 end
