@@ -29,7 +29,7 @@ class ArticlesController < ApplicationController
 
   # Save the new article in the databbase
   def create
-
+    byebug
     @article = Article.new(article_params)
     # While there is no authentication
     @article.user = current_user
@@ -94,7 +94,7 @@ class ArticlesController < ApplicationController
     # Require the top level atribute article and permit only the title and Description
     # from it.
     # It is a security feature included at rails 4
-    params.require(:article).permit(:title, :description)
+    params.require(:article).permit(:title, :description, category_ids: [])
   end
 
   def require_same_user
