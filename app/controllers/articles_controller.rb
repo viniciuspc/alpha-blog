@@ -29,7 +29,6 @@ class ArticlesController < ApplicationController
 
   # Save the new article in the databbase
   def create
-    byebug
     @article = Article.new(article_params)
     # While there is no authentication
     @article.user = current_user
